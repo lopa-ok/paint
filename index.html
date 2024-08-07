@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MS Paint in JavaScript</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="toolbar">
+        <button onclick="setColor('#000000')" style="background: #000000;"></button>
+        <button onclick="setColor('#ff0000')" style="background: #ff0000;"></button>
+        <button onclick="setColor('#00ff00')" style="background: #00ff00;"></button>
+        <button onclick="setColor('#0000ff')" style="background: #0000ff;"></button>
+        <button onclick="setBrushSize(5)">Small Brush</button>
+        <button onclick="setBrushSize(10)">Medium Brush</button>
+        <button onclick="setBrushSize(20)">Large Brush</button>
+        <button onclick="clearCanvas()">Clear</button>
+    </div>
+    <canvas id="canvas" width="800" height="600"></canvas>
+
+    <script src="script.js"></script>
+</body>
+</html>
