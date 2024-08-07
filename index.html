@@ -16,6 +16,13 @@
         <button onclick="setBrushSize(10)">Medium Brush</button>
         <button onclick="setBrushSize(20)">Large Brush</button>
         <button onclick="clearCanvas()">Clear</button>
+        <select id="shapeSelect" onchange="setShape(this.value)">
+            <option value="free">Free Draw</option>
+            <option value="line">Line</option>
+            <option value="rect">Rectangle</option>
+            <option value="circle">Circle</option>
+        </select>
+        <button onclick="setShape('bucket')">Paint Bucket</button>
     </div>
     <canvas id="canvas" width="800" height="600"></canvas>
 
