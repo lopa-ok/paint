@@ -9,7 +9,7 @@ let startX, startY;
 function startPosition(e) {
     painting = true;
     [startX, startY] = [e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop];
-    if (shape === 'free') {
+    if (shape === 'free' || shape === 'eraser') {
         draw(e);
     } else if (shape === 'bucket') {
         fillColor(startX, startY);
@@ -17,7 +17,7 @@ function startPosition(e) {
 }
 
 function endPosition() {
-    if (shape !== 'free' && shape !== 'bucket') {
+    if (shape !== 'free' && shape !== 'bucket' && shape !== 'eraser') {
         drawShape();
     }
     painting = false;
@@ -29,9 +29,15 @@ function draw(e) {
 
     ctx.lineWidth = brushSize;
     ctx.lineCap = 'round';
-    ctx.strokeStyle = color;
 
     if (shape === 'free') {
+        ctx.strokeStyle = color;
+        ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+    } else if (shape === 'eraser') {
+        ctx.strokeStyle = '#FFFFFF'; 
         ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
         ctx.stroke();
         ctx.beginPath();
@@ -142,11 +148,29 @@ function setBrushSize(size) {
 
 function setShape(newShape) {
     shape = newShape;
+    if (shape === 'eraser') {
+        ctx.globalCompositeOperation = 'destination-out'; 
+    } else {
+        ctx.globalCompositeOperation = 'source-over'; 
+    }
 }
 
 function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
+
+function handleButtonClick(event) {
+    const button = event.target;
+    button.classList.add('clicked');
+    setTimeout(() => {
+        button.classList.remove('clicked');
+    }, 200); 
+}
+
+
+document.querySelectorAll('button').forEach(button => {
+    button.addEventListener('click', handleButtonClick);
+});
 
 canvas.addEventListener('mousedown', startPosition);
 canvas.addEventListener('mouseup', endPosition);
